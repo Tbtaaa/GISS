@@ -1,0 +1,27 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+.httr-oauth
+.DS_Store
+.quarto
+data/*
+
+#Homework 01
+Homework 01/Statistical Area 1 dataset for Census 2018-total-New Zealand_updated_4-11-21/2018-SA1-dataset-individual-part-1-total-NZ_updated_16-7-20.xlsx
+Homework 01/Statistical Area 1 dataset for Census 2018-total-New Zealand_updated_4-11-21/2018-SA1-dataset-individual-part-2-total-NZ_updated_16-7-20.xlsx
+
+#Homework 02
+Homework 02/Report_Card_Assessment_Data_2018-19_School_Year_20251009.csv
+
+#Workclass 02 (.shp .shx .dbf .prj .cpg)
+Workclass 02/London_Boundaries/LAD_Dec_2015_FCB_GB.*
+
+#Workclass 03
+Workclass 03/gadm41_AUS.gpkg
+
+#Homework 03
+Homework 03/Rasters/wc2.1_2.5m_tmax_ACCESS-CM2_ssp585_2081-2100.tif
+Homework 03/Rasters/wc2.1_2.5m_tmax_ACCESS-CM2_ssp126_2081-2100.tif
+
+
