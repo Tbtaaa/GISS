@@ -1,0 +1,72 @@
+---
+title: "World Inequality index_Tabata Paredes"
+output: html_document
+date: "2025-10-24"
+---
+
+Assignment: Join the global gender inequality index to spatial data of the World, creating a new column of difference in inequality between 2010 and 2019
+
+First, let's install and unpack some libraries
+
+```{r message=FALSE, warning=FALSE}
+library(sf)
+library(janitor)
+library(tidyverse)
+library(countrycode)
+library(ggplot2)
+library(tmap)
+library(tmaptools)
+```
+
+Then, let's read, clean and prepare the files
+
+```{r message=FALSE, warning=FALSE}
+#Geometry of countries
+w_countries <- st_read("World_Countries//World_Countries_Generalized.shp") %>%
+  clean_names()
+head(w_countries,5)
+
+#Read de complete dataset from 1990 to 2021
+data_complete <- read_csv("HDR25_Composite_indices_complete_time_series.csv", na = "NA") %>%
+  clean_names()
+
+#Select the gender inequality index (gii) coloumns
+data_gii <- data_complete %>%
+  select(contains("iso"),
+         contains("country"),
+         contains("gii_2010"), 
+         contains("gii_2019")) %>%
+  mutate(dif = gii_2010 - gii_2019)
+head(data_gii)
+```
+
+Now we match the coloumns and merge the files
+
+```{r}
+w_gii <- w_countries %>%
+  mutate(iso3 = countrycode(iso, "iso2c", "iso3c"))%>%
+  left_join(data_gii, by = c("iso3" = "iso3", "country" = "country"))%>%
+  select("country", "iso3", "gii_2010", "gii_2019", "dif")
+
+plot(w_gii["dif"], 
+     pal = hcl.colors(9, "viridis"),
+     main = "Diference in inequality index of the years 2010 and 2019")
+```
+
+
+Sources:
+
+
+Global gender inequality data:
+
+https://hdr.undp.org/data-center/documentation-and-downloads
+
+
+Spatial data of the world:
+
+https://hub.arcgis.com/datasets/2b93b06dc0dc4e809d3c8db5cb96ba69_0/explore?location=-2.688200%2C0.000000%2C1.41
+
+
+Countrycode package:
+
+Arel-Bundock, Vincent, Nils Enevoldsen, and CJ Yetman, (2018). countrycode: An R package to convert country names and country codes. Journal of Open Source Software, 3(28), 848, https://doi.org/10.21105/joss.00848
