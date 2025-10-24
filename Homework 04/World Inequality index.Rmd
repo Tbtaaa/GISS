@@ -53,6 +53,45 @@ plot(w_gii["dif"],
      main = "Diference in inequality index of the years 2010 and 2019")
 ```
 
+DINAMIC MAP:
+```{r}
+w_gii_4326 <- w_gii %>%
+  st_transform(.,4326)
+tmap_mode("view")
+tm_shape(w_gii_4326) +
+  tm_polygons(fill="dif",
+              fill.scale = tm_scale_intervals(values = "viridis", style = "jenks"),
+              fill_alpha = 0.5,
+              fill.legend = tm_legend(title = "Inequality index difference", size = 0.8)) +
+              tm_basemap(server = "OpenStreetMap") +
+                tm_compass(type = "arrow",
+                           position = c("left", "bottom"),
+                           size = 1) +
+                tm_scalebar(position = c("left", "bottom")) +
+                tm_title("Diference in inequality index of the years 2010 and 2019", 
+                size = 2, 
+                position = c("center", "top"))
+```
+
+
+```{r}
+gghist <- ggplot(w_gii, aes(x = dif)) +
+  geom_histogram(bins = 30, color = "black", fill = "white") +
+  labs(title = "Diference in inequality index of the years 2010 and 2019",
+       x = "Difference",
+       y = "Frecuency")
+gghist + geom_vline(aes(xintercept = 0),
+                        color = "blue",
+                        linetype = "dashed",
+                        size = 1) +
+                      theme(plot.title = element_text(hjust = 0.5))
+
+```
+
+Since the difference was calculated as 2010 − 2019, the histogram shows that most countries (with positive values) reduced their inequality index.
+
+
+
 
 Sources:
 
