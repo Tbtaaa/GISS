@@ -1,0 +1,14 @@
+---
+title: "RMD Test"
+output: html_document
+date: "2025-10-23"
+---
+
+```{r message=FALSE, warning=FALSE}
+library(terra)
+library(here)
+jan <- terra::rast(here("Workclass 03", "wc2.1_5m_srad", "wc2.1_5m_srad_01.tif"))
+# have a look at the raster layer jan
+plot(jan)
+```
+
